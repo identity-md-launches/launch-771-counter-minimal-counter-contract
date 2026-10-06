@@ -75,8 +75,9 @@ contract CounterTest is Test {
         assertEq(counter.count(), 1);
     }
 
+    /// forge-config: default.fuzz.runs = 1000
     function testFuzz_IncrementFromAnyNonMaxState(address caller, uint256 priorCount) public {
-        vm.assume(priorCount < type(uint256).max);
+        priorCount = bound(priorCount, 0, type(uint256).max - 1);
         // Only a test can seed storage: the application exposes no setter.
         vm.store(address(counter), bytes32(0), bytes32(priorCount));
         vm.expectEmit(true, false, false, true, address(counter));
@@ -86,6 +87,7 @@ contract CounterTest is Test {
         assertEq(counter.count(), priorCount + 1);
     }
 
+    /// forge-config: default.fuzz.runs = 1000
     function testFuzz_InterleavedCallers(address[16] memory callers) public {
         for (uint256 i; i < 32; ++i) {
             // Repeat the same callers in reverse order on the second pass.
@@ -134,9 +136,11 @@ contract CounterTest is Test {
         _assertRejected(hex"d09de0", 0);
     }
 
+    /// forge-config: default.fuzz.runs = 1000
     function testFuzz_UnknownSelectorReverts(bytes4 selector) public {
-        vm.assume(selector != Counter.increment.selector);
-        vm.assume(selector != bytes4(keccak256("count()")));
+        if (selector == Counter.increment.selector || selector == bytes4(keccak256("count()"))) {
+            selector = bytes4(0xffffffff);
+        }
         _assertRejected(abi.encodePacked(selector), 0);
     }
 

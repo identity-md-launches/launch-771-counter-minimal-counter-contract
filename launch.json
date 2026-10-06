@@ -6,5 +6,5 @@
       "constructorArgs": []
     }
   ],
-  "notes": "Permissionless counter for Robinhood Chain. Deploy with zero value and no initialization. No owner, admin, fees, token or external dependencies. Independent contributor security review of the final source, build settings and manifest is required before deployment."
+  "notes": "Permissionless Counter for Robinhood Chain. count() reads a uint256 initially zero. increment() adds one with checked arithmetic and emits Incremented(address indexed caller, uint256 newCount). Deploy with no constructor arguments, zero value and no initialization calls. No owner, admin functions, fees, token or external dependencies. No payable entry points or fund-management functions; unsolicited forced assets cannot be prevented or recovered. The accepted Foundry suite covers increments, exact event fields, many callers, overflow, rejected payments and invariants. Independent contributor security review of the final source, tests, build settings and manifest remains pending and is required before deployment."
 }

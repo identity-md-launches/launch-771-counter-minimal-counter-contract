@@ -1,0 +1,10 @@
+{
+  "kind": "evm_contracts",
+  "contracts": [
+    {
+      "contract": "Counter",
+      "constructorArgs": []
+    }
+  ],
+  "notes": "Permissionless counter for Robinhood Chain. Deploy with zero value and no initialization. No owner, admin, fees, token or external dependencies. Independent contributor security review of the final source, build settings and manifest is required before deployment."
+}
